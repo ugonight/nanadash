@@ -10,7 +10,7 @@ char soundFileName[255];
 
 void makeFileName(char* fileName, char* result) {
 	strcpy(result, fileName);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN10)
 	strcat(result,".wav");
 #else
 	strcat(result,".ogg");
@@ -102,11 +102,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//add search path
 	std::vector<std::string> searchPath;
 	searchPath.push_back("Resources_win");
-	FileUtils::sharedFileUtils()->setSearchPaths(searchPath);
-
-	//preload
-	LoadSE("rifujin")
-	LoadBGM("music")
+	FileUtils::getInstance()->setSearchPaths(searchPath);
 
     return true;
 }

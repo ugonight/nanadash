@@ -1,4 +1,5 @@
 #include "LogoLayer.h"
+#include "TitleLayer.h"
 
 #include "define.h"
 
@@ -21,7 +22,7 @@ bool LogoLayer::init() {
 		FadeIn::create(1.0f),
 		FadeIn::create(1.5f),
 		FadeOut::create(1.0f),
-		CallFunc::create(this, callfunc_selector(LogoLayer::end)),
+		CallFunc::create(CC_CALLBACK_0(LogoLayer::end, this)),
 		NULL
 	);
 
@@ -31,11 +32,20 @@ bool LogoLayer::init() {
 
 	this->addChild(sprite, 0, "logo");
 
-
 	return true;
 }
 
 void LogoLayer::end() {
-	//Close the cocos2d-x game scene and quit the application
-	Director::getInstance()->end();
+	////Close the cocos2d-x game scene and quit the application
+	//Director::getInstance()->end();
+
+
+	//画面遷移する。
+	auto scene = TitleLayer::createScene();
+
+	// 0.5秒かけてホワイトアウトしてタイトルに移動する
+	auto fade = TransitionFade::create(0.5f, scene, Color3B::WHITE);
+
+	//LogoLayerを破棄してTitleLayerに遷移する
+	Director::getInstance()->replaceScene(fade);
 }
