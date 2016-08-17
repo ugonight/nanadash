@@ -12,4 +12,10 @@ public:
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(GameLayer);
+private:
+	int mTouchTime;
+	int mTouchY;
+	int mLeaveTime;
+
+	void sUpdate();	//scheduleUpdate()
 };
