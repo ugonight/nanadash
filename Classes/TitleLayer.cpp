@@ -1,5 +1,6 @@
 
 #include "TitleLayer.h"
+#include "GameLayer.h"
 
 #include "define.h"
 
@@ -100,6 +101,19 @@ bool TitleLayer::init() {
 	startBtn->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 200));
 	menu->addChild(startBtn);
 
+	auto animation = Animation::create();
+	for (int i = 0; i < 10; i++) animation->addSpriteFrameWithFileName("nana2.png");
+	animation->addSpriteFrameWithFileName("nana2-2.png");
+	animation->addSpriteFrameWithFileName("nana2-3.png");
+	animation->addSpriteFrameWithFileName("nana2-2.png");
+	animation->setDelayPerUnit(2.0f / 13.0f);
+	animation->setRestoreOriginalFrame(true);
+	animation->setLoops(1);
+	auto nana2 = Sprite::create("nana2.png");
+	nana2->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 4));
+	auto animate = Animate::create(animation);
+	nana2->runAction(RepeatForever::create(animate));
+	this->addChild(nana2, 0, "nana2");
 
 	return true;
 }
@@ -107,6 +121,10 @@ bool TitleLayer::init() {
 // スタートボタンが押された時のコールバック
 void TitleLayer::startBtnCallback(Ref* pSender) {
 	PlaySE("start")
+
+	auto scene = GameLayer::createScene();
+	auto fade = TransitionProgressRadialCW::create(0.5f, scene);
+	Director::getInstance()->replaceScene(fade);
 }
 
 
